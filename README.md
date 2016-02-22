@@ -1,4 +1,7 @@
 # Odot!
+
+[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
+
 A humble todo app built with Flask and React with a PostgreSQL backend.
 
 ## Features
@@ -46,3 +49,10 @@ $ gunicorn serve:app --log-file -
 ```
 
 Before the app will work you need to setup the database schema which you can do my visiting [`/setup`](http://localhost:5000/setup) in your browser.
+
+
+[travis-url]: https://travis-ci.org/robinandeer/odot
+[travis-image]: https://img.shields.io/travis/robinandeer/odot.svg?style=flat-square
+
+[coveralls-url]: https://coveralls.io/r/robinandeer/odot
+[coveralls-image]: https://img.shields.io/coveralls/robinandeer/odot.svg?style=flat-square
