@@ -1,0 +1,9 @@
+Flask
+Flask-Alchy
+GitHub-Flask
+Flask-RESTful
+SQLAlchemy
+alchy
+gunicorn
+ipython
+psycopg2
