@@ -18,6 +18,7 @@ Make sure you have node.js and npm installed. Create your Python virtualenv of c
 $ git clone https://github.com/robinandeer/odot
 $ cd odot
 $ npm install
+$ npm install -g webpack webpack-dev-server
 $ pip install -e .
 $ webpack -d
 ```

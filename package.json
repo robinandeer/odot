@@ -1,13 +1,13 @@
 {
-  "name": "todo",
-  "version": "1.0.0",
+  "name": "odot",
+  "version": "0.0.1",
+  "repository": "https://github.com/robinandeer/odot",
   "description": "",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "dependencies": {
-    "babel-preset-react": "^6.5.0",
     "babelify": "^7.2.0",
     "react": "^0.14.7",
     "react-bootstrap": "^0.28.3",

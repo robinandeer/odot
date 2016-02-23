@@ -5,5 +5,4 @@ Flask-RESTful
 SQLAlchemy
 alchy
 gunicorn
-ipython
 psycopg2
