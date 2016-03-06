@@ -1,1 +1,1 @@
-web: gunicorn serve:app --log-file -
+web: gunicorn odot.server.views:app --log-file -

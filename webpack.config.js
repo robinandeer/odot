@@ -22,6 +22,7 @@ module.exports = {
         loaders: [{
             test: /\.jsx?$/,
             include: PATHS.app,
+            exclude: /node_modules/,
             loader: 'babel',
             query: {
                 presets: ["es2015", "react", "stage-0"]
@@ -29,6 +30,11 @@ module.exports = {
         }]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            }
+        })
     ]
 }

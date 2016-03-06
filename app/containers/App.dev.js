@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { receiveLists } from '../actions'
-import AddTodoList from '../containers/AddTodoList'
-import VisibleTodoLists from '../containers/VisibleTodoLists'
-import LoadedHeader from '../containers/LoadedHeader'
+import AddTodoList from './AddTodoList'
+import VisibleTodoLists from './VisibleTodoLists'
+import LoadedHeader from './LoadedHeader'
+import DevTools from './DevTools';
 
 
 class App extends Component {
@@ -21,6 +22,8 @@ class App extends Component {
                 <LoadedHeader />
                 <VisibleTodoLists />
                 <AddTodoList />
+
+                <DevTools />
             </div>
         )
     }
