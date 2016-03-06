@@ -12,10 +12,10 @@ const Todo = ({ text, done, onClick, onDelete }) => (
                 {text}
             </div>
             <div className="col-xs-2">
-                <div className="badge">
+                <span className="badge pull-right">
                     <span className="glyphicon glyphicon-remove"
                           onClick={onDelete}></span>
-                </div>
+                </span>
             </div>
         </div>
     </ListGroupItem>

@@ -16,16 +16,10 @@ let AddTodoList = ({ dispatch }) => {
                 dispatch(addTodoList(input.value))
                 input.value = ''
             }}>
-                <Row>
-                    <Col md={10} xs={8}>
-                        <input className="form-control" ref={node => {
-                            input = node
-                        }} placeholder="Directors..." />
-                    </Col>
-                    <Col md={2} xs={4}>
-                        <button className="btn btn-default form-control" type="submit">Add Todolist</button>
-                    </Col>
-                </Row>
+                <input className="form-control" ref={node => {
+                    input = node
+                }} placeholder="Add todo list..." />
+                <button type="submit" hidden />
             </form>
         </div>
     )

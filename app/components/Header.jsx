@@ -12,11 +12,11 @@ const Header = ({ username }) => (
 
         <Navbar.Collapse>
             <Navbar.Text>
-                Signed in as: <strong>{username}</strong>
+                <strong>{username}</strong>
             </Navbar.Text>
 
-            <Navbar.Text pullRight>
-                <a href="/logout">Logout</a>
+            <Navbar.Text>
+                <Navbar.Link href="/logout">Logout</Navbar.Link>
             </Navbar.Text>
         </Navbar.Collapse>
     </Navbar>
