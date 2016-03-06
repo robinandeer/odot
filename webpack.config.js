@@ -1,27 +1,34 @@
-var webpack = require('webpack');
-var path = require('path');
+const path = require('path')
+const webpack = require('webpack')
 
-var BUILD_DIR = path.resolve(__dirname, 'static');
-var APP_DIR = path.resolve(__dirname, 'js');
+const PATHS = {
+  app: path.join(__dirname, 'app'),
+  build: path.join(__dirname, 'odot/server/static')
+}
 
-var config = {
-  entry: APP_DIR + '/index.jsx',
-  output: {
-    path: BUILD_DIR,
-    filename: 'bundle.js'
-  },
-  module : {
-    loaders : [
-      {
-        test : /\.jsx?/,
-        include : APP_DIR,
-        loader : 'babel',
-        query: {
-          presets: ['es2015', 'react']
-        }
-      }
+module.exports = {
+    // Step 1: Source Maps
+    devtool: 'cheap-module-source-map',
+
+    entry: PATHS.app,
+    output: {
+        path: PATHS.build,
+        filename: 'bundle.js'
+    },
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    },
+    module: {
+        loaders: [{
+            test: /\.jsx?$/,
+            include: PATHS.app,
+            loader: 'babel',
+            query: {
+                presets: ["es2015", "react", "stage-0"]
+            }
+        }]
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
     ]
-  }
-};
-
-module.exports = config;
+}

@@ -45,10 +45,11 @@ def test_remove_list(db, user):
 def test_add_todo(db, user):
     one_list = user.lists[0]
     before_count = len(one_list.todos)
-    todo_title = 'Do this thing'
-    db.add_todo(todo_title, one_list)
+    todo_text = 'Do this thing'
+    db.add_todo(todo_text, one_list)
     assert len(one_list.todos) == before_count + 1
-    assert one_list.todos[-1].title == todo_title
+    assert one_list.todos[0].text == todo_text
+    assert one_list.todos[0].done is False
 
 
 def test_remove_todo(db, user):

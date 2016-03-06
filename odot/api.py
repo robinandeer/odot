@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from alchy import ModelBase, make_declarative_base, Manager
-from sqlalchemy import orm, Column, types, ForeignKey
+from sqlalchemy import orm, Column, types, ForeignKey, func
 
 Model = make_declarative_base(Base=ModelBase)
 
@@ -12,29 +10,26 @@ class User(Model):
     name = Column(types.String(128))
     email = Column(types.String(128))
     gh_token = Column(types.String(128))
-    #created_at = Column(types.DateTime, default=datetime.now)
 
     lists = orm.relationship('List')
+
+
+class Todo(Model):
+    id = Column(types.Integer, primary_key=True)
+    text = Column(types.String(256))
+    done = Column(types.Boolean, default=False)
+    list_id = Column(types.Integer, ForeignKey('list.id'))
+
+    list = orm.relationship('List')
 
 
 class List(Model):
     id = Column(types.Integer, primary_key=True)
     name = Column(types.String(128))
-    #created_at = Column(types.DateTime, default=datetime.now)
     user_id = Column(types.Integer, ForeignKey('user.id'))
 
     user = orm.relationship('User')
-    todos = orm.relationship('Todo')
-
-
-class Todo(Model):
-    id = Column(types.Integer, primary_key=True)
-    title = Column(types.String(128))
-    is_checked = Column(types.Boolean)
-    #created_at = Column(types.DateTime, default=datetime.now)
-    list_id = Column(types.Integer, ForeignKey('list.id'))
-
-    list = orm.relationship('List')
+    todos = orm.relationship('Todo', order_by=Todo.id.desc())
 
 
 class TodoStore(Manager):
@@ -85,8 +80,8 @@ class TodoStore(Manager):
         todo_obj = Todo.query.get(todo_id)
         return todo_obj
 
-    def add_todo(self, title, list_obj):
-        new_todo = Todo(title=title)
+    def add_todo(self, text, list_obj):
+        new_todo = Todo(text=text)
         list_obj.todos.append(new_todo)
         self.commit()
         return new_todo

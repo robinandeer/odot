@@ -11,11 +11,18 @@ from odot.api import TodoStore, Model
 
 
 app = Flask(__name__)
-app.config.from_object('odot.settings.DevelopConfig')
+app.config.from_object('odot.server.settings.DevelopConfig')
 api = Api(app)
 github = GitHub(app)
 store = TodoStore(Model=Model)
 store.init_app(app)
+
+
+def dictify_user(user_obj):
+    user_dict = user_obj.to_dict()
+    user_dict['lists'] = [dictify_list(list_obj) for list_obj
+                          in user_obj.lists]
+    return user_dict
 
 
 def dictify_list(list_obj):
@@ -96,7 +103,8 @@ def authorized(oauth_token):
 @app.route('/user')
 def user():
     if g.user:
-        return jsonify(**g.user.to_dict())
+        user_dict = dictify_user(g.user)
+        return jsonify(**user_dict)
     else:
         return abort(500)
 
@@ -118,19 +126,19 @@ class UserApi(Resource):
         user_obj = store.user(email)
         if user_obj is None:
             return abort(404)
-        user_dict = user_obj.to_dict()
-        user_dict['lists'] = [dictify_list(list_obj) for list_obj
-                              in user_obj.lists]
+        user_dict = dictify_user(user_obj)
         return user_dict
 
 
 class ListsApi(Resource):
     def post(self):
         name = request.form['name']
-        email = request.form['email']
-        user_obj = store.user(email)
-        new_list = store.add_list(name, user_obj)
+        new_list = store.add_list(name, g.user)
         return new_list.to_dict()
+
+    def get(self):
+        data = [user_list.to_dict() for user_list in g.user.lists]
+        return {'lists': data}
 
 
 class ListApi(Resource):
@@ -148,12 +156,25 @@ class ListApi(Resource):
         return {'success': True}
 
 
+class TodosApi(Resource):
+    def post(self):
+        list_id = request.form['list_id']
+        text = request.form['text']
+        list_obj = store.list(list_id)
+        todo_obj = store.add_todo(text, list_obj)
+        return todo_obj.to_dict()
+
+
 class TodoApi(Resource):
     def put(self, todo_id):
-        is_checked = request.form['is_checked'] == 'true'
         todo_obj = store.todo(todo_id)
-        todo_obj.is_checked = is_checked
+        todo_obj.done = False if todo_obj.done else True
         store.commit()
+        return todo_obj.to_dict()
+
+    def delete(self, todo_id):
+        todo_obj = store.todo(todo_id)
+        store.remove_todo(todo_obj)
         return todo_obj.to_dict()
 
 
@@ -162,6 +183,8 @@ api.add_resource(UserApi, '/api/v1/users/<email>')
 api.add_resource(ListsApi, '/api/v1/lists')
 api.add_resource(ListApi, '/api/v1/lists/<list_id>')
 api.add_resource(TodoApi, '/api/v1/todos/<todo_id>')
+api.add_resource(TodosApi, '/api/v1/todos')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
