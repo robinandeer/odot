@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from alchy import ModelBase, make_declarative_base, Manager
-from sqlalchemy import orm, Column, types, ForeignKey, func
+from sqlalchemy import orm, Column, types, ForeignKey
 
 Model = make_declarative_base(Base=ModelBase)
 
