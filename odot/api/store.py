@@ -1,43 +1,31 @@
 # -*- coding: utf-8 -*-
-from alchy import ModelBase, make_declarative_base, Manager
-from sqlalchemy import orm, Column, types, ForeignKey
+from alchy import Manager
 
-Model = make_declarative_base(Base=ModelBase)
-
-
-class User(Model):
-    id = Column(types.Integer, primary_key=True)
-    name = Column(types.String(128))
-    email = Column(types.String(128))
-    gh_token = Column(types.String(128))
-
-    lists = orm.relationship('List')
-
-
-class Todo(Model):
-    id = Column(types.Integer, primary_key=True)
-    text = Column(types.String(256))
-    done = Column(types.Boolean, default=False)
-    list_id = Column(types.Integer, ForeignKey('list.id'))
-
-    list = orm.relationship('List')
-
-
-class List(Model):
-    id = Column(types.Integer, primary_key=True)
-    name = Column(types.String(128))
-    user_id = Column(types.Integer, ForeignKey('user.id'))
-
-    user = orm.relationship('User')
-    todos = orm.relationship('Todo', order_by=Todo.id.desc())
+from .models import User, List, Todo
 
 
 class TodoStore(Manager):
 
+    """API layer for managing list of todos."""
+
     def init_app(self, app):
+        """Flask initialize method.
+
+        Args:
+            app (Flask): Flask app instance
+        """
         self.config.update(app.config)
 
     def user(self, email=None, gh_token=None):
+        """Fetch a user from the database.
+
+        Args:
+            email (Optional[str]): email of the user
+            gh_token (Optional[str]): GitHub auth token
+
+        Returns:
+            User: related user model or `None`
+        """
         if email:
             one_user = User.query.filter_by(email=email).first()
         else:

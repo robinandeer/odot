@@ -7,14 +7,18 @@ const Todo = ({ text, done, onClick, onDelete }) => (
             <div onClick={onClick}
                  className="col-xs-10"
                  style={{
-                    textDecoration: done ? 'line-through': 'none'
+                    textDecoration: done ? 'line-through': 'none',
+                    cursor: 'pointer'
                  }}>
                 {text}
             </div>
             <div className="col-xs-2">
                 <span className="badge pull-right">
                     <span className="glyphicon glyphicon-remove"
-                          onClick={onDelete}></span>
+                          onClick={onDelete}
+                          style={{
+                            cursor: 'pointer'
+                          }}></span>
                 </span>
             </div>
         </div>

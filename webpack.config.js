@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'odot/server/static')
+  build: path.join(__dirname, 'odot/server/blueprints/public/static')
 }
 
 module.exports = {

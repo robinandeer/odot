@@ -9,13 +9,9 @@
 </head>
 <body>
 
-  <div class="container">
-    <div class="page-header">
-      <h3>Odot!</h3>
-    </div>
-    <p>A humble todo list app written in Flask and React.JS</p>
-    <a class="btn btn-primary" href="/login">Login with GitHub</a>
-  </div>
+  {% block content %}{% endblock %}
+
+  {% block js_bottom %}{% endblock %}
 
 </body>
 </html>

@@ -18,7 +18,8 @@ const TodoList = ({
 
             <span className="badge pull-right">
                 <span className="glyphicon glyphicon-remove"
-                      onClick={onDelete}></span>
+                      onClick={onDelete}
+                      style={{ cursor: 'pointer' }}></span>
             </span>
         </div>
 

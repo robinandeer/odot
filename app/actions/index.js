@@ -27,7 +27,7 @@ export const addTodoList = (name) => {
         // notify server
         $.post('/api/v1/lists', { name: name }).then(resp => {
             // update UI
-            return dispatch(addTodoListDefensive(resp.id, name))
+            dispatch(addTodoListDefensive(resp.id, name))
         })
     }
 }

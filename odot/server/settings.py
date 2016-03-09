@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
 
+from odot.server.blueprints import api_bp, login_bp, public_bp
+
 
 class BaseConfig:
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    BLUEPRINTS = [api_bp, login_bp, public_bp]
 
 
 class DevelopConfig(BaseConfig):

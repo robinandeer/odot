@@ -1,5 +1,6 @@
 Flask
 Flask-Alchy
+Flask-Script
 GitHub-Flask
 Flask-RESTful
 SQLAlchemy
